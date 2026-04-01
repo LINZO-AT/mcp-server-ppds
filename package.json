@@ -1,0 +1,11 @@
+{
+  "name": "ppds-mcp-server",
+  "version": "1.0.0",
+  "description": "PP/DS MCP Server for SAP S/4HANA PCE – powered by odata-mcp-proxy",
+  "scripts": {
+    "start": "odata-mcp-proxy"
+  },
+  "dependencies": {
+    "odata-mcp-proxy": "latest"
+  }
+}

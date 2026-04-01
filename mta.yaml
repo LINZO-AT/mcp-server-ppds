@@ -1,0 +1,35 @@
+_schema-version: "3.1"
+ID: ppds-mcp-server
+version: 1.0.0
+
+modules:
+  - name: ppds-mcp-server
+    type: nodejs
+    path: .
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+    requires:
+      - name: ppds-destination-service
+      - name: ppds-xsuaa
+      - name: ppds-connectivity
+
+resources:
+  - name: ppds-destination-service
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+
+  - name: ppds-xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+
+  - name: ppds-connectivity
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: connectivity
+      service-plan: lite

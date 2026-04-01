@@ -1,0 +1,101 @@
+{
+  "server": {
+    "name": "ppds-mcp-server",
+    "version": "1.0.0",
+    "description": "PP/DS Planning Assistant – S/4HANA PCE"
+  },
+  "apis": [
+    {
+      "name": "planned-orders",
+      "destination": "S4H_PCE",
+      "pathPrefix": "/sap/opu/odata/sap/API_PLANNED_ORDERS",
+      "csrfProtected": true,
+      "entitySets": [
+        {
+          "entitySet": "PlannedOrder",
+          "urlPath": "A_PlannedOrder",
+          "description": "PP/DS Planned Orders – Header data with dates, quantities, material",
+          "keys": [{ "name": "PlannedOrder", "type": "string" }],
+          "operations": { "list": true, "get": true, "create": false, "update": false, "delete": false },
+          "filterableProperties": [
+            "Material", "MRPPlant", "PlannedOrderType",
+            "PlannedOrderOpeningDate", "ProductionStartDate", "ProductionEndDate",
+            "PlannedOrderPlannedStartDate", "PlannedOrderPlannedEndDate"
+          ]
+        },
+        {
+          "entitySet": "PlannedOrderComponent",
+          "urlPath": "A_PlannedOrderComponent",
+          "description": "Components (BOM items) of planned orders",
+          "keys": [
+            { "name": "PlannedOrder", "type": "string" },
+            { "name": "Reservation", "type": "string" },
+            { "name": "ReservationItem", "type": "string" }
+          ],
+          "operations": { "list": true, "get": true, "create": false, "update": false, "delete": false },
+          "filterableProperties": ["PlannedOrder", "Material", "StorageLocation"]
+        },
+        {
+          "entitySet": "PlannedOrderCapacity",
+          "urlPath": "A_PlannedOrderCapacity",
+          "description": "Capacity requirements of planned orders",
+          "keys": [
+            { "name": "PlannedOrder", "type": "string" },
+            { "name": "OperationInternalID", "type": "string" }
+          ],
+          "operations": { "list": true, "get": true, "create": false, "update": false, "delete": false },
+          "filterableProperties": ["PlannedOrder", "WorkCenter", "CapacityRequirementStartDate"]
+        }
+      ]
+    },
+    {
+      "name": "production-orders",
+      "destination": "S4H_PCE",
+      "pathPrefix": "/sap/opu/odata/sap/API_PRODUCTION_ORDERS_2_SRV",
+      "csrfProtected": true,
+      "entitySets": [
+        {
+          "entitySet": "ProductionOrder",
+          "urlPath": "A_ProductionOrder",
+          "description": "Manufacturing / Production Orders – status, dates, quantities",
+          "keys": [{ "name": "ManufacturingOrder", "type": "string" }],
+          "operations": { "list": true, "get": true, "create": false, "update": false, "delete": false },
+          "filterableProperties": [
+            "Material", "ProductionPlant", "ManufacturingOrderType",
+            "MfgOrderPlannedStartDate", "MfgOrderPlannedEndDate",
+            "ManufacturingOrderStatus"
+          ]
+        },
+        {
+          "entitySet": "ProductionOrderOperation",
+          "urlPath": "A_ProductionOrderOperation",
+          "description": "Operations / routing steps of production orders",
+          "keys": [
+            { "name": "ManufacturingOrder", "type": "string" },
+            { "name": "ManufacturingOrderOperation", "type": "string" }
+          ],
+          "operations": { "list": true, "get": true, "create": false, "update": false, "delete": false },
+          "filterableProperties": ["ManufacturingOrder", "WorkCenter", "OpActualStartDate"]
+        }
+      ]
+    },
+    {
+      "name": "work-centers",
+      "destination": "S4H_PCE",
+      "pathPrefix": "/sap/opu/odata/sap/API_WORK_CENTER_SRV",
+      "csrfProtected": true,
+      "entitySets": [
+        {
+          "entitySet": "WorkCenter",
+          "urlPath": "A_WorkCenter",
+          "description": "Work centers / resources",
+          "keys": [
+            { "name": "WorkCenterInternalID", "type": "string" }
+          ],
+          "operations": { "list": true, "get": true, "create": false, "update": false, "delete": false },
+          "filterableProperties": ["WorkCenter", "WorkCenterTypeCode", "Plant"]
+        }
+      ]
+    }
+  ]
+}

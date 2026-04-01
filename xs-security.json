@@ -1,0 +1,14 @@
+{
+  "xsappname": "ppds-mcp-server",
+  "tenant-mode": "dedicated",
+  "scopes": [
+    { "name": "$XSAPPNAME.MCPViewer", "description": "Read access to PP/DS MCP tools" }
+  ],
+  "role-templates": [
+    {
+      "name": "MCPViewer",
+      "description": "Read-only PP/DS planning data",
+      "scope-references": ["$XSAPPNAME.MCPViewer"]
+    }
+  ]
+}
